@@ -28,9 +28,26 @@ Both have something missing. A transition occured when **one** condition is trig
 
 Additionnally, things can change and are not necessarily immutable. A door which is unlocked is not open until I actually open it and a door which is openned can be closed.
 
-## 
 
-If you've already ask yourself what to use between ```if```, ```switch case``` 
+## if statements
+
+I introduced this project by saying that it's for you if you are pissed of by ```if``` (or ```switch case```) statements. What I wanted to say is : Do you think this is really 
+
+```js
+if(state1){
+	//do something
+	if(state2){
+		//do something
+		if(state3){
+			//do something
+			if(...){
+				//do something
+			}
+		}
+	}
+}
+```
+Most importantly, this is not maintainable (or scalable) because each statement are in the same object. 
 
 
 
@@ -50,3 +67,4 @@ require(["Door"], function(Door){
 });
 
 ```
+You'll find some [examples](https://github.com/bredele/door/tree/master/test) and one in particular, with a form which I think show how useful **door.js** is. 
