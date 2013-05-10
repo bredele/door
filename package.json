@@ -1,0 +1,36 @@
+{
+  "name": "locked-door",
+  "version": "0.0.0",
+  "description": "This is a simple design pattern.",
+  "main": "GruntFile.js",
+  "dependencies": {
+    "grunt": "~0.4.1",
+    "grunt-regarde": "~0.1.1",
+    "grunt-contrib-jshint": "~0.4.3",
+    "grunt-contrib-requirejs": "~0.4.0",
+    "grunt-shell": "~0.2.2"
+  },
+  "devDependencies": {
+    "grunt-regarde": "~0.1.1",
+    "grunt-contrib-requirejs": "~0.4.0",
+    "grunt-contrib-jshint": "~0.4.3",
+    "grunt-shell": "~0.2.2"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bredele/locked-door.git"
+  },
+  "keywords": [
+    "design",
+    "pattern",
+    "javascript",
+    "states",
+    "observer",
+    "actions"
+  ],
+  "author": "Olivier Wietrich",
+  "license": "BSD"
+}

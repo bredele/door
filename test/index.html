@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+	<title>Locked Door integration</title>
+	<style type="text/css">
+	body {
+		margin-left:100px;
+	}
+
+	button {
+		border:0;
+		color:white;
+		font-weight: bold;
+		width:44px; height: 20px;
+		cursor: pointer;
+	}
+	.door {
+		position:relative;
+		border:3px solid red;
+		width:300px; height:600px;
+	}
+
+	.door.open {
+		border:3px solid green;
+	}
+
+
+	.locks {
+		position:absolute;
+		top:175px; width:44px;
+		right:-24px;
+	}
+
+	.lock {
+		margin-bottom:100px;
+		background:red;
+	}
+	.unlock {
+		background:green;
+	}
+
+	</style>
+</head>
+<body>
+	<h1>Example 1</h1>
+	<div class="example1">
+		<div class="door">
+			<div class="locks">
+				<button data-lock="lock1" class="lock">Lock1</button>
+				<button data-lock="lock2" class="lock">Lock2</button>
+				<button data-lock="lock3" class="lock">Lock3</button>
+			</div>
+		</div>
+	</div>
+	<h1>Example 2</h1>
+	<form class="example2">
+		<input class="text" type="text">
+		<input class="password" type="password">
+		<button class="submit" type="button">Submit</button>
+	</form>
+	<script src="../libs/require.js"></script>
+	<script src="../libs/emily.js"></script>
+	<script src="../src/locked-door.js"></script>
+	<script src="example1.js"></script>
+	<script src="example2.js"></script>
+</body>
+</html>
