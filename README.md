@@ -5,9 +5,7 @@ door
 
 ## Some thoughts
 
-I would like to start by saying that . 
 
-It probably exists somewhere and if it doesn't so 
 
 
 ## What the heck is this?
