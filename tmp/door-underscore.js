@@ -1,24 +1,16 @@
-var observable = require('./underscore-observable'),
+var Observable = require('./underscore-observable');
 
-    /**
-     * [ description]
-     * @return {Object} Door object
-     */
-    Door = (function () {
 
-        var locks = null,
-            clone = null;
+    function Door( $locks ){
 
-        function Door( $locks ) {
-            locks = ($locks instanceof Array) ? $locks : [];
+        var locks = ($locks instanceof Array) ? $locks : [],
             clone = locks.slice(0);
-        }
 
-        Door.prototype.getLocks = function () {
+        this.getLocks = function(){
             return locks;
         };
 
-        Door.prototype.unlock = function ( lock, key ) {
+        this.unlock = function( lock, key ){
             var index = locks.indexOf(lock);
             if(index > -1) {
                 if(key) {
@@ -27,25 +19,25 @@ var observable = require('./underscore-observable'),
                     return true;
                 } else {
                     //means it's not in the list of locks (it has been unlocked)
-                    if(!key && clone.indexOf(lock) > -1) {
+                    if(!key && this.clone.indexOf(lock) > -1) {
                         locks.push(lock);
                     }
                 }
                 return false;
-        };
+            };
 
-        Door.prototype.open = function () {
+        this.open = function(){
             if(locks.length > 0) {
                 return false;
             }
-            observable.emit("open");
+            this.emit("open");
             return true;
         };
+    }
 
-        Door.prototype.on = observable.on;
 
-        return Door;
 
-    })();
-
-module.exports = Door;
+module.exports = function($param){
+    Door.prototype = new Observable();
+    return new Door($param);
+};
