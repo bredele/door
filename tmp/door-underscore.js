@@ -1,43 +1,81 @@
-var Observable = require('./underscore-observable');
+var events = require('events');
 
 
-    function Door( $locks ){
+function Door( $locks, options ){
 
-        var locks = ($locks instanceof Array) ? $locks : [],
-            clone = locks.slice(0);
-
-        this.getLocks = function(){
-            return locks;
-        };
-
-        this.unlock = function( lock, key ){
-            var index = locks.indexOf(lock);
-            if(index > -1) {
-                if(key) {
-                        locks.splice(index, 1); //the 1 is the number of item to remove, doublon?
-                    }
-                    return true;
-                } else {
-                    //means it's not in the list of locks (it has been unlocked)
-                    if(!key && this.clone.indexOf(lock) > -1) {
-                        locks.push(lock);
-                    }
-                }
-                return false;
-            };
-
-        this.open = function(){
-            if(locks.length > 0) {
-                return false;
+    var locks = ($locks instanceof Array) ? $locks : [],
+        clone = locks.slice(0),
+        options = options || {},
+        observer = null,
+        _lock = function(lock){
+            if(clone.indexOf(lock) > -1) {
+                //push lock in array
+                locks.push(lock);
+                return true;
             }
-            this.emit("open");
-            return true;
+            return false;
+        },
+         _unlock = function(lock){
+             var index = locks.indexOf(lock);
+            if ( index > -1) {
+                 locks.splice(index, 1);
+                return true;
+            }
+             return false;
         };
-    }
+
+    this.getLocks = function(){
+        return locks;
+    };
+
+        //toggleLock
+    this.unlock = function(lock, bool){
+         //and if somethinh else than bool?
+         var key = bool ? bool : true;
+        if ( key ) {
+            _unlock(lock);
+        } else {
+            _lock(lock);
+        }
+        //it has to be a boolean
+        if(options.automatic === true) {
+            this.open();
+        }
+    };
+
+        //call pass in lock ter;inology
+    this.pass = function( array, bool ){
+        for(var l = array.length; l--;) {
+            this.unlock(array[l], bool);
+        }
+    };
+
+    this.open = function(){
+        if(locks.length > 0) {
+            return false;
+        }
+        this.emit("open");
+        return true;
+    };
+
+    //pipe with an observer
+    this.pipe = function(observable){
+        //check if observable?
+        observer = observable;
+    };
+
+    this.async = function(topic, lock, callback){
+        observer.on(topic, function(){
+            //check if boolean or set to false
+            var bool = callback.call();
+            this.unlock(lock, bool);
+        });
+    };
+
+}
 
 
-
-module.exports = function($param){
-    Door.prototype = new Observable();
-    return new Door($param);
+module.exports = function($param, $options){
+    Door.prototype = new events.EventEmitter();
+    return new Door($param, $options);
 };

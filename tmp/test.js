@@ -2,19 +2,18 @@ var Door = require('./door-underscore');
 
 var door = new Door(['lock1', 'lock2', 'lock3']);
 
-var door2 = new Door(['lock4', 'lock5', 'lock6']);
 
 
 door.on('open', function(){
 	console.log('door unlocked');
 });
 
-door.unlock('lock1', true);
+door.unlock('lock1');
 console.log('unlock lock1');
 door.open();
 
 
-door.unlock('lock2', true);
+door.unlock('lock2');
 console.log('unlock lock2');
 door.open();
 
@@ -25,32 +24,27 @@ door.open();
 
 
 
-
-console.log(door.getLocks());
-console.log(door2.getLocks());
-
+var door2 = new Door(['lock4', 'lock5', 'lock6']);
 
 door2.on('open', function(){
 	console.log('door2 unlocked');
 });
 
-console.log(door.getLocks());
-console.log(door2.getLocks());
 
-door2.unlock('lock1', true);
-console.log('unlock lock1');
+door2.pass(['lock4', 'lock5', 'lock6']);
 door2.open();
 
 
-door2.unlock('lock4', true);
-console.log('unlock lock4');
-door2.open();
+
+var door3 = new Door(['lock7', 'lock8'], {
+	automatic : true
+});
+
+door3.on('open', function(){
+	console.log('door3 unlocked');
+});
+
+door3.unlock('lock7');
+door3.unlock('lock8');
 
 
-door2.unlock('lock5', true);
-console.log('unlock lock5');
-door2.open();
-
-door2.unlock('lock6', true);
-console.log('unlock lock6');
-door2.open();
