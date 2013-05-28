@@ -64,12 +64,18 @@ function Door( $locks, options ){
         observer = observable;
     };
 
-    this.async = function(topic, lock, callback){
+    this.async = function(topic, lock, callback, scope){
+        var that = this;
         observer.on(topic, function(){
             //check if boolean or set to false
-            var bool = callback.call();
-            this.unlock(lock, bool);
-        });
+            var bool = true;
+            if(typeof callback === 'function'){
+                bool = callback.call();
+            } else if (typeof callback === 'boolean') {
+                bool = callback;
+            }
+            that.unlock(lock, bool);
+        }, scope);
     };
 
 }

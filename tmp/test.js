@@ -1,4 +1,4 @@
-var Door = require('./door-underscore');
+var Door = require('./door');
 
 var door = new Door(['lock1', 'lock2', 'lock3']);
 
@@ -46,5 +46,24 @@ door3.on('open', function(){
 
 door3.unlock('lock7');
 door3.unlock('lock8');
+
+
+var emitter = require('events');
+var parent = new emitter.EventEmitter();
+
+
+
+
+var  test = new Door(['shit', 'happend'], {
+  automatic : true
+});
+test.on('open', function(){
+  console.log('shit it works');
+});
+test.unlock('shit');
+test.pipe(parent);
+test.async('sometimes', 'happend');
+
+parent.emit('sometimes');
 
 
